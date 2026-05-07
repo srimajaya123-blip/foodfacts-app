@@ -1,26 +1,48 @@
+import { useNavigate } from 'react-router-dom'
+
 function FoodCard({ product }) {
-  const { product_name, brands, nutriments, image_small_url } = product
+  const navigate = useNavigate()
+
+  const {
+    product_name,
+    brands,
+    nutriments,
+    image_small_url,
+    code
+  } = product
+
+  const handleClick = () => {
+    navigate(`/product/${code}`)
+  }
 
   return (
-    <div className="food-card">
-      {/* Image */}
-      {image_small_url ? (
-        <img src={image_small_url} alt={product_name} />
-      ) : (
-        <div>No Image</div>
-      )}
+    <div
+      className="food-card"
+      onClick={handleClick}
+    >
+      <img
+        src={image_small_url || 'https://via.placeholder.com/150'}
+        alt={product_name}
+      />
 
-      {/* Name */}
-      <h2>{product_name ? product_name : 'Unknown Product'}</h2>
+      <h3>{product_name}</h3>
 
-      {/* Brand */}
-      <p>{brands ? brands : 'Unknown Brand'}</p>
+      <p>{brands}</p>
 
-      {/* Nutrients */}
-      <p>Calories: {nutriments?.['energy-kcal_100g'] ?? 'N/A'} kcal</p>
-      <p>Protein: {nutriments?.proteins_100g ?? 'N/A'} g</p>
-      <p>Carbs: {nutriments?.carbohydrates_100g ?? 'N/A'} g</p>
-      <p>Fat: {nutriments?.fat_100g ?? 'N/A'} g</p>
+      <p>
+        Calories:{' '}
+        {nutriments?.['energy-kcal_100g'] || 'N/A'}
+      </p>
+
+      <p>
+        Protein:{' '}
+        {nutriments?.proteins_100g || 'N/A'}g
+      </p>
+
+      <p>
+        Carbs:{' '}
+        {nutriments?.carbohydrates_100g || 'N/A'}g
+      </p>
     </div>
   )
 }
